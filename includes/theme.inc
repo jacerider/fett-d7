@@ -138,7 +138,9 @@ function fett_field($vars) {
   if($vars['content_wrap'] && count($vars['items']) > 1){
     $output .= '</' . $vars['content_wrap_element'] . '>';
   }
-  $output = '<div class="' . $vars['classes'] . '"' . $vars['attributes'] . '>' . $output . '</div>';
+  if($vars['element_type']){
+    $output = '<' . $vars['element_type'] . ' class="' . $vars['classes'] . '"' . $vars['attributes'] . '>' . $output . '</' . $vars['element_type'] . '>';
+  }
   return $output;
 }
 

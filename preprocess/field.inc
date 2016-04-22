@@ -7,6 +7,7 @@
 
 function fett_preprocess_field(&$vars){
   $vars['no_colon'] = false;
+  $vars['element_type'] = 'div';
   $vars['content_wrap'] = false;
   $vars['content_wrap_element'] = 'div';
   $vars['content_attributes_array']['class'][] = 'items';
