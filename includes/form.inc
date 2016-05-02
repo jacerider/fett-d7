@@ -46,14 +46,29 @@ function fett_form_element($vars) {
   if (!empty($element['#attributes']['disabled'])) {
     $attributes['class'][] = 'form-disabled';
   }
-  $output = '<div' . drupal_attributes($attributes) . '>' . "\n";
 
   // If #title is not set, we don't display any label or required marker.
   if (!isset($element['#title'])) {
     $element['#title_display'] = 'none';
   }
-  $prefix = isset($element['#field_prefix']) ? '<span class="field-prefix">' . $element['#field_prefix'] . '</span> ' : '';
-  $suffix = isset($element['#field_suffix']) ? ' <span class="field-suffix">' . $element['#field_suffix'] . '</span>' : '';
+
+  $prefix = !empty($element['#field_prefix']) ? $element['#field_prefix'] : '';
+  $suffix = !empty($element['#field_suffix']) ? $element['#field_suffix'] : '';
+
+  if (strip_tags(str_replace(array('&lrm;'), '', $prefix))) {
+    $attributes['class'][] = 'has-prefix';
+    $prefix = '<div class="prefix">' . $prefix . '</div>';
+  }
+  if (strip_tags(str_replace(array('&lrm;'), '', $suffix))) {
+    $attributes['class'][] = 'has-suffix';
+    $suffix = '<div class="postfix">' . $suffix . '</div>';
+  }
+  if ($prefix || $suffix) {
+    $prefix = '<div class="wrap">' . $prefix;
+    $suffix = $suffix . '</div>';
+  }
+
+  $output = '<div' . drupal_attributes($attributes) . '>' . "\n";
 
   switch ($element['#title_display']) {
     case 'before':

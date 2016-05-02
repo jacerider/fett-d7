@@ -18,7 +18,34 @@ form{
       color: lighten($body-font-color, 40%);
     }
   }
+
+  .has-prefix,
+  .has-suffix {
+
+    > .wrap {
+      @include display(flex);
+
+      > .prefix,
+      > .postfix {
+        @include flex(0 0 auto);
+        width: auto;
+        padding: 0 $column-gutter/2;
+      }
+
+      > .postfix {
+        margin-left: -1px;
+      }
+
+      > *:not(.prefix):not(.postfix) {
+        width: 100%;
+      }
+    }
+  }
 }
+
+/* Separate prefix and postfix styles when on span or label so buttons keep their own */
+div.prefix { @include prefix(); }
+div.postfix { @include postfix(); }
 
 input:not([type]), input[type="text"], input[type="password"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], input[type="color"], textarea{
   @include placeholder {
