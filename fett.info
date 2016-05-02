@@ -112,6 +112,7 @@ include_preprocess[] = 'video_embed_field_embed_code'
 include_preprocess[] = 'views_view'
 include_preprocess[] = 'views_view_unformatted'
 include_preprocess[] = 'webform_element'
+include_preprocess[] = 'user_profile'
 
 
 ;-------------- PROCESS INCLUDES
