@@ -16,9 +16,16 @@ _fett_include(_fett_theme_info('include_process', array()), 'process');
  * Implements hook_preprocess_HOOK().
  */
 function fett_preprocess_username(&$vars) {
-  global $language;
-  // Make sure this validates
-  $vars['attributes_array']['lang'] = $vars['attributes_array']['xml:lang'];
+  // xml:lang alone is invalid in HTML5. Use the lang attribute instead.
+  if (!empty($vars['attributes_array']['xml:lang'])){
+    $vars['attributes_array']['lang'] = $vars['attributes_array']['xml:lang'];
+  }
+  if (empty($vars['attributes_array']['lang'])) {
+    $vars['attributes_array']['lang'] = '';
+  }
+  unset($vars['attributes_array']['xml:lang']);
+  unset($vars['attributes_array']['property']);
+  unset($vars['attributes_array']['rel']);
 }
 
 /**
