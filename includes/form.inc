@@ -34,13 +34,10 @@ function fett_form_element($vars) {
   // Add element's #type and #name as class to aid with JS/CSS selectors.
   $attributes['class'] = array('form-item');
   if (!empty($element['#type'])) {
-    $attributes['class'][] = strtr($element['#type'], '_', '-');
+    $attributes['class'][] = 'form-type-' . strtr($element['#type'], '_', '-');
   }
-  if (!empty($element['#field_name'])) {
-    $attributes['class'][] = strtr($element['#field_name'], '_', '-');
-  }
-  if (!empty($element['#delta'])) {
-    $attributes['class'][] = 'item-' . $element['#delta'];
+  if (!empty($element['#name'])) {
+    $attributes['class'][] = 'form-item-' . strtr($element['#name'], array(' ' => '-', '_' => '-', '[' => '-', ']' => ''));
   }
   // Add a class for disabled elements to facilitate cross-browser styling.
   if (!empty($element['#attributes']['disabled'])) {

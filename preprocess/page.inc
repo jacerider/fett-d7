@@ -138,6 +138,8 @@ function fett_preprocess_page(&$vars){
     $vars['sidebar_first_classes_array'][] = 'large-pull-' . $content_large;
   }
   elseif($has_second){
+    $content_large = 12;
+    $content_large -= $sidebar_large;
     $vars['content_classes_array'][] = 'large-' . $content_large;
     $vars['sidebar_second_classes_array'][] = 'large-' . $sidebar_large;
   }

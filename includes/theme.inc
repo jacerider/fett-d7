@@ -70,7 +70,7 @@ function fett_links($vars) {
          && (empty($link ['language']) || $link ['language']->language == $language_url->language)) {
         $class [] = 'active';
       }
-      $output .= '<li>';
+      $output .= '<li' . drupal_attributes(array('class' => $class)) . '>';
 
       if (isset($link ['href'])) {
         // Pass in $link as $options, they share the same keys.

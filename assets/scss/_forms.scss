@@ -47,6 +47,16 @@ form{
 div.prefix { @include prefix(); }
 div.postfix { @include postfix(); }
 
+div.prefix,
+div.postfix {
+
+  > .button {
+    margin: 0 !important;
+    padding: $column-gutter/5 $column-gutter/2  !important;
+    font-size: rem-calc(13)  !important;
+  }
+}
+
 input:not([type]), input[type="text"], input[type="password"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], input[type="color"], textarea{
   @include placeholder {
     color: $form-placeholder-color;
