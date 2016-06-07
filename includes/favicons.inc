@@ -8,7 +8,6 @@ function fett_favicons_load_all_icons() {
   $icons = &drupal_static(__FUNCTION__);
   $key = $theme_key . '_favicons_icons';
   if (!isset($icons)) {
-    $tags = _fett_favicons_defaults();
     if ($cached = cache_get($key, 'cache')) {
       $icons = $cached->data;
     }
@@ -46,12 +45,12 @@ function _fett_favicons_defaults(){
 <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
 <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="/favicon-194x194.png" sizes="194x194">
 <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
 <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
 <link rel="manifest" href="/manifest.json">
-<meta name="apple-mobile-web-app-title" content="Fett">
-<meta name="application-name" content="Fett">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="msapplication-TileImage" content="/mstile-144x144.png">
 <meta name="theme-color" content="#ffffff">';
@@ -133,7 +132,7 @@ function _fett_favicons_validate_tags($html) {
  *   The full relative path to the icon within public files.
  */
 function _fett_favicons_normalise_path($file_path) {
-  global $base_path;
+  global $base_path, $theme_key;
 
   // Remove absolute URLs.
   if (url_is_external($file_path)) {
@@ -146,7 +145,16 @@ function _fett_favicons_normalise_path($file_path) {
   $wrapper = file_stream_wrapper_get_instance_by_uri('public://');
   if ($wrapper instanceof DrupalLocalStreamWrapper) {
     $tags = fett_get_setting('favicons_tags', null, null);
-    $path = !empty($tags) ? $wrapper->getDirectoryPath() . '/' . fett_get_setting('favicons_path', null, 'favicons') : drupal_get_path('theme', 'fett') . '/assets/favicons';
+    if (!empty($tags)) {
+      $path = $wrapper->getDirectoryPath() . '/' . fett_get_setting('favicons_path', null, 'favicons');
+    }
+    else {
+      $path = drupal_get_path('theme', $theme_key) . '/assets/favicons';
+      if ($theme_key !== 'fett' && !file_exists($path)) {
+        $path = drupal_get_path('theme', 'fett') . '/assets/favicons';
+        dsm($path);
+      }
+    }
     $relative_path = $path . $file_path;
   }
 
