@@ -1,5 +1,47 @@
 (function ($, Drupal) {
 
+var FettMegaMenu = {};
+
+FettMegaMenu.attach = function(context, settings) {
+  if (settings.fett_megamenu && settings.fett_megamenu.hover) {
+    var $dropItems = $('.megamenu .drop', context);
+    var timeouts = {};
+    var count = 0;
+    $dropItems.each(function(){
+      $(this).data('mmId', count);
+      count++;
+    }).once('fett-megamenu').hover(function(){
+      var self = this;
+      var id = $(this).data('mmId');
+      if (timeouts[id]) {
+        if (timeouts[id]['offAnimate']) {
+          clearTimeout(timeouts[id]['offAnimate']);
+        }
+        if (timeouts[id]['offHover']) {
+          clearTimeout(timeouts[id]['offHover']);
+        }
+      }
+      $(self).addClass('hover');
+      setTimeout(function(){
+        $(self).addClass('animate');
+      }, 10);
+    }, function(){
+      var self = this;
+      var id = $(this).data('mmId');
+      timeouts[id] = {};
+      timeouts[id]['offAnimate'] = setTimeout(function(){
+        $(self).removeClass('animate');
+        timeouts[id]['offHover'] = setTimeout(function(){
+          $(self).removeClass('hover');
+        }, 300);
+      }, 300);
+    });
+  }
+}
+
+Drupal.behaviors.fettMegaMenu = FettMegaMenu;
+
+
 var FettMegaMenuOffCanvas = {
   runOnce: false,
   isMobile: Fett.isMobile(),
@@ -73,7 +115,7 @@ FettMegaMenuOffCanvas.init = function() {
     var $li = $(this);
     var $subLevel = $('div.mp-level:first', $li);
     if($subLevel.length){
-      $('a:first', $li).on(self.eventType, function(e){
+      $('> a:first, > span.nolink', $li).on(self.eventType, function(e){
         e.stopPropagation();
         var $level = $('.mp-level:first', $li);
         var level = $level.data('mp-level');

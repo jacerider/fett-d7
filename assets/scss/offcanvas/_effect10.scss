@@ -74,6 +74,14 @@
   @include transform(translate3d(40px, 0, 0));
 }
 
+.oc-effect-10.oc-open.mp-level-2.oc-direction-right .oc-effect-10.active{
+  @include transform(translate3d(-40px, 0, 0));
+}
+
 .oc-effect-10.oc-open.mp-level-3 .oc-effect-10.active{
   @include transform(translate3d(80px, 0, 0));
+}
+
+.oc-effect-10.oc-open.mp-level-3.oc-direction-right .oc-effect-10.active{
+  @include transform(translate3d(-80px, 0, 0));
 }

@@ -25,6 +25,13 @@ function fett_settings_megamenu_form(&$form, $theme_name) {
     '#description' => t('The depth of the menu tree.'),
   );
 
+  $form['megamenu_js_hover'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable JavaScript hover classes.'),
+    '#default_value' => fett_get_setting('megamenu_js_hover'),
+    '#description' => t('When a link with child items is hovered over, a class will be assigned along with an animate class that will allow for CSS animations.'),
+  );
+
   if(module_exists('fawesome')){
     $form['megamenu_icon'] = array(
       '#type' => 'checkbox',

@@ -28,27 +28,31 @@ function _fett_theme_megamenu(&$theme){
 function fett_megamenu_preprocess_page(&$vars){
   if(!empty($vars['main_menu'])){
     $path_fett = drupal_get_path('theme', 'fett');
-    $vars['page']['content']['#attached']['css']["$path_fett/assets/scss/_megamenu.scss"] = array(
-      'group' => CSS_DEFAULT,
+    $vars['page']['content']['#attached']['library'][] = array('fett', 'fett.megamenu');
+    $vars['page']['content']['#attached']['js'][] = array(
+      'type' => 'setting',
       'every_page' => TRUE,
-    );
-    $vars['page']['content']['#attached']['js']["$path_fett/assets/js/fett.megamenu.js"] = array(
-      'group' => JS_LIBRARY,
-      'every_page' => TRUE,
+      'data' => array('fett_megamenu' => array(
+        'hover' => fett_get_setting('megamenu_js_hover'),
+      )),
     );
     $source = variable_get('menu_main_links_source', 'main-menu');
     $tree = menu_tree_all_data($source, null, fett_get_setting('megamenu_depth', null, 3));
     _fett_menu_tree_add_active_path($tree);
     $links = menu_tree_output($tree);
     unset($links['#theme_wrappers']);
+    $attributes = array(
+      'id' => 'main-nav',
+      'class' => array('megamenu'),
+    );
+    if (!fett_get_setting('megamenu_js_hover')) {
+      $attributes['class'][] = 'css-hover';
+    }
     $vars['main_nav'] = array(
       '#theme' => 'fett_megamenu',
       '#tree' => $links,
       '#megamenu' => TRUE,
-      '#attributes' => array(
-        'id' => 'main-nav',
-        'class' => array('megamenu'),
-      ),
+      '#attributes' => $attributes,
     );
   }
 }
@@ -152,11 +156,12 @@ function fett_menu_link__megamenu_1($vars) {
     (empty($element['#localized_options']['language']) || $element['#localized_options']['language']->language == $language_url->language)) {
     $element['#attributes']['class'][] = 'active';
   }
+  $element['#title'] = '<span>' . $element['#title'] . '</span>';
+  $element['#localized_options']['html'] = TRUE;
   if(!empty($element['#icon']) && fett_get_setting('megamenu_icon')){
     $icon = $element['#icon'] == '_default' ? '' : $element['#icon'];
     if($icon){
-      $element['#title'] = '<i class="fa fa-' . $icon . '"></i> <span>' . $element['#title'] . '</span>';
-      $element['#localized_options']['html'] = TRUE;
+      $element['#title'] = '<i class="fa fa-' . $icon . '"></i> ' . $element['#title'];
       $element['#localized_options']['attributes']['class'][] = 'has-icon';
     }
   }

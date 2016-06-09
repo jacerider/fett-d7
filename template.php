@@ -106,6 +106,26 @@ function fett_library(){
       array('fett', 'fett.position'),
     ),
   );
+  $libraries['fett.megamenu'] = array(
+    'title' => 'Mega Menu',
+    'website' => 'https://github.com/jacerider/fett',
+    'version' => '7.x-3.x-dev',
+    'js' => array(
+      "$path_fett/assets/js/fett.megamenu.js" => array(
+        'every_page' => TRUE,
+        'group' => JS_LIBRARY,
+        'weight' => 5,
+      ),
+    ),
+    'css' => array(
+      "$path_fett/assets/scss/_megamenu.scss" => array(
+        'type' => 'file',
+        'media' => 'screen',
+        'every_page' => TRUE,
+        'group' => CSS_DEFAULT,
+      ),
+    ),
+  );
   $libraries['fett.tooltips'] = array(
     'title' => 'Tooltipster',
     'website' => 'http://iamceege.github.io/tooltipster/',
