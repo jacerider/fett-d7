@@ -40,6 +40,10 @@ body{
   -webkit-overflow-scrolling: touch;
 }
 
+.oc-open .oc-content {
+  overflow: hidden;
+}
+
 .oc-close{
   display:none;
 }

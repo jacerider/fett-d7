@@ -24,6 +24,7 @@ form{
 
     > .wrap {
       @include display(flex);
+      @include align-items(center);
 
       > .prefix,
       > .postfix {
