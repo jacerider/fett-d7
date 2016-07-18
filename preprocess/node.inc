@@ -13,6 +13,9 @@ function fett_preprocess_node(&$vars){
     fett_share_preprocess_node($vars);
   }
 
+  $vars['prefix'] = '';
+  $vars['suffix'] = '';
+
   // Add custom hook suggestions
   $vars['theme_hook_suggestions'] = array();
   $vars['theme_hook_suggestions'][] = 'node__' . $vars['view_mode'];

@@ -81,6 +81,7 @@
  */
 ?>
 <article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+  <?php print $prefix; ?>
 
   <?php print $user_picture; ?>
 
@@ -109,4 +110,5 @@
 
   <?php print render($content['comments']); ?>
 
+  <?php print $suffix; ?>
 </article>
